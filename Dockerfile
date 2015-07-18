@@ -24,10 +24,18 @@ RUN apt-get -y install gradle
 # Define working directory.
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+
+# selectively add the POM file
+ADD code/build.gradle /code
+# get all the downloads out of the way
+RUN gradle check
+
+
 ADD code /code
 WORKDIR /code
+RUN gradle check
 # Define default command.
 #CMD ["echo","---------------------- starting ------------------"]
 #CMD ["ls -al code"]
 #CMD ["./gradlew"]
-#CMD ["./gradlew", "tRW"]
+#CMD ["./gradlew:q", "tRW"]
